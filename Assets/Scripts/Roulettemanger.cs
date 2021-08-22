@@ -215,12 +215,6 @@ public class Roulettemanger : MonoBehaviour
         List<BettingType> type = new List<BettingType>();
         List<CustomType> customtype = new List<CustomType>();
 
-        //List<BettingRequest> bet = new List<BettingRequest>();// for testing
-        //bet.Add(new BettingRequest() { betName = "Column 34", amount = 100 });
-        //bet.Add(new BettingRequest() { betName = "1st 12", amount = 500 });
-        //bet.Add(new BettingRequest() { betName = "Combination (32 33 35 36)", amount = 600 });
-        //bet.Add(new BettingRequest() { betName = "Combination (33 36)", amount = 700 });
-
         int count = bet.Count();
         Debug.Log("Bet Count:" + count);
 

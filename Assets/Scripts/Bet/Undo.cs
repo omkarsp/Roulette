@@ -52,6 +52,13 @@ public class Undo : MonoBehaviour
         }
     }
 
+    public void ClearCoinsFromTable()
+    {
+        //coinsInGame.Clear();
+        coinValues.Clear();
+        foreach (GameObject coin in coinsInGame) Destroy(coin);
+    }
+
     private void OnDestroy()
     {
         undoButton.onClick.RemoveAllListeners();

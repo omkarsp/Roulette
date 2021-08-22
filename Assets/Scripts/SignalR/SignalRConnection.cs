@@ -135,10 +135,8 @@ public class SignalRConnection : MonoBehaviour
         Debug.Log("test betting");
         try
         {
-            Debug.Log("1: " + betting.ToString());
             //RouletteBedding betting
             await hubProxy.Invoke("onbetting", betting);
-            Debug.Log("2: " + betting.ToString());
 
             //Dispatcher.Instance.Dispatch(async () =>
             //{

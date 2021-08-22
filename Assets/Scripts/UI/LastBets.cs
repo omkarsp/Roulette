@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 public class LastBets : MonoBehaviour
 {
-    [SerializeField] private Transform betsView;
+    [SerializeField] private Transform betsViewParent;
     [SerializeField] private GameObject betsViewElement;
     [SerializeField] private int noOfBets = 5;
     private List<int> lastBetsList;
@@ -21,7 +21,7 @@ public class LastBets : MonoBehaviour
     {
         for (int i = 0; i < noOfBets; i++)
         {
-            GameObject go = Instantiate(betsViewElement, betsView);
+            GameObject go = Instantiate(betsViewElement, betsViewParent);
             go.GetComponent<TextMeshProUGUI>().text = lastBetsList[i].ToString();
         }
     }

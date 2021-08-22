@@ -203,7 +203,6 @@ public class BetSelection : MonoBehaviour
     {
         clickable.betSelected += OnBetClicked;
         nmbTriggered += OnNMBTriggered;
-        //nmbTriggered += OnNMBTriggered;
         bettingRequests = new List<BettingRequest>();
 
         //Writing the names of all the objects in the list to a text file
@@ -211,7 +210,7 @@ public class BetSelection : MonoBehaviour
         //StartCoroutine(WriteToFile());
     }
 
-    //When a bet is clicked on the table.
+    //When a bet is clicked on the table with mouse/touch.
     private void OnBetClicked(Transform selectedBetTransform)
     {
         if (currentChip.value <= player.playerBalance)
@@ -269,10 +268,18 @@ public class BetSelection : MonoBehaviour
         bettingRequests.Add(new BettingRequest() { betName = selectedBetTransform.name, amount = currentChip.value });
     }
 
-    public /*async Task*/ void OnNMBTriggered()
+    public void OnNMBTriggered()
     {
-        connection.Betting(rouletteManager.ConvertBettingData(bettingRequests, "test_id", "test_auth"));
+        //connection.Betting(rouletteManager.ConvertBettingData(bettingRequests, "Game", "test_auth"));
         Debug.Log("OnNMBTriggered");
+    }
+
+    //when bet button is clicked
+    public void BetButtonClicked()
+    {
+        connection.Betting(rouletteManager.ConvertBettingData(bettingRequests, "Game", "test_auth"));
+        bettingRequests.Clear();
+        undo.ClearCoinsFromTable();
     }
 
     private void OnDestroy()
@@ -280,6 +287,7 @@ public class BetSelection : MonoBehaviour
         clickable.betSelected -= OnBetClicked;
         nmbTriggered -= OnNMBTriggered;
     }
+
     #region utility
     private IEnumerator WriteToFile()
     {
