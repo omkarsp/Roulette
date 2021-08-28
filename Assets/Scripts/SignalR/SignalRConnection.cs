@@ -30,7 +30,6 @@ public class SignalRConnection : MonoBehaviour
     public void Init()
     {
         StartAsync();
-        //OnDataReceived += DisplayData;
     }
 
     public void DisplayData()
@@ -135,14 +134,7 @@ public class SignalRConnection : MonoBehaviour
         Debug.Log("test betting");
         try
         {
-            //RouletteBedding betting
             await hubProxy.Invoke("onbetting", betting);
-
-            //Dispatcher.Instance.Dispatch(async () =>
-            //{
-            //    await hubProxy.Invoke("onbetting", betting);
-            //    Debug.Log(betting.ToString());
-            //});
         }
         
         catch (Exception ex)

@@ -270,7 +270,6 @@ public class BetSelection : MonoBehaviour
 
     public void OnNMBTriggered()
     {
-        //connection.Betting(rouletteManager.ConvertBettingData(bettingRequests, "Game", "test_auth"));
         Debug.Log("OnNMBTriggered");
     }
 

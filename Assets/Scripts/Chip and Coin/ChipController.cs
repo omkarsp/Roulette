@@ -32,21 +32,4 @@ public class ChipController : MonoBehaviour
     {
         Instantiate(movableChipPrefab, startPos, Quaternion.identity, coinsParent);
     }
-
-    private void MoveChip(Vector3 betPos)
-    {
-        StartCoroutine(MoveChipRoutine(betPos));
-    }
-
-    IEnumerator MoveChipRoutine(Vector3 betPos)
-    {
-        SetupCoinToBet();
-
-        while (Vector3.Distance(betPos, startPos) > 0)
-        {
-            movableChipPrefab.Translate(betPos * Time.deltaTime * moveSpeed);
-        }
-
-        yield return null;
-    }
 }

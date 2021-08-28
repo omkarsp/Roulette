@@ -27,23 +27,12 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        //connection = new SignalRConnection();
-        //tester = new Tester();
-        //connection.StartAsync();
         connection.Init();
         AddListeners();
-        //Task.Run(async () =>
-        //{
-        //    //await connection.StartAsync();
-        //    await tester.StartAsync();
-        //});
-        //tester.StartAsync();
     }
 
     private void AddListeners()
     {
-        //tester.GameWalletReceived += UpdatePlayerBalance;
-        //connection.OnDataReceived += UpdatePlayerBalance;
         onDataReceived += uIController.PopulateData;
         onTransactionData += noMoreBets.OnNMBData;
     }
@@ -55,8 +44,6 @@ public class GameManager : MonoBehaviour
 
     private void RemoveListeners()
     {
-        //tester.GameIdReceived -= UpdatePlayerBalance;
-        //connection.OnDataReceived -= UpdatePlayerBalance;
         onDataReceived -= uIController.PopulateData;
         onTransactionData -= noMoreBets.OnNMBData;
     }

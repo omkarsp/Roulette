@@ -18,13 +18,6 @@ public class CurrentBets : MonoBehaviour
 
     public void ClearCurrentbets()
     {
-        //int children = currentBetsParent.GetChildCount();
-
-        //for (int i = 0; i < children; i++)
-        //{
-        //    Destroy(currentBetsParent.GetChild(i).gameObject);
-        //}
-
         foreach (Transform child in currentBetsParent)
         {
             Destroy(child.gameObject);
