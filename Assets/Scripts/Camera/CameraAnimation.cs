@@ -17,7 +17,7 @@ public class CameraAnimation : MonoBehaviour
         anim.Play("TableToWheel");
     }
 
-    public void MoveToTabloe()
+    public void MoveToTable()
     {
         anim.Play("WheelToTable");
     }

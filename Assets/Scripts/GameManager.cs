@@ -10,9 +10,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Player player;
     [SerializeField] private TextMeshProUGUI playerBalanceTxt;
     public Action<string, double, double, string, string, int, double> onDataReceived;
+    public Action<OnConnected> onJsonDataReceived;
     public Action<string, string> onTransactionData;
     [SerializeField] UIController uIController;
     [SerializeField] NoMoreBets noMoreBets;
+    [SerializeField] BallMovement ballMovement;
 
     #region Received Data
     public string member;
@@ -34,6 +36,8 @@ public class GameManager : MonoBehaviour
     private void AddListeners()
     {
         onDataReceived += uIController.PopulateData;
+        onJsonDataReceived += uIController.PopulateDataJson;
+        onJsonDataReceived += ballMovement.SetGameResetData;
         onTransactionData += noMoreBets.OnNMBData;
     }
 
@@ -45,6 +49,8 @@ public class GameManager : MonoBehaviour
     private void RemoveListeners()
     {
         onDataReceived -= uIController.PopulateData;
+        onJsonDataReceived -= uIController.PopulateDataJson;
+        onJsonDataReceived -= ballMovement.SetGameResetData;
         onTransactionData -= noMoreBets.OnNMBData;
     }
 }

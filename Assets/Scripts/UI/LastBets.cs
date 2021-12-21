@@ -8,21 +8,24 @@ public class LastBets : MonoBehaviour
     [SerializeField] private Transform betsViewParent;
     [SerializeField] private GameObject betsViewElement;
     [SerializeField] private int noOfBets = 5;
-    private List<int> lastBetsList;
+    private List<PreviousWinnerList> lastBetsList;
 
-    public void UpdateBetList(string list)
+    public void UpdateBetList(List<PreviousWinnerList> list)
     {
-        lastBetsList = JsonConvert.DeserializeObject<List<int>>(list);
+        lastBetsList = list;
 
         FillLastBetsView();
     }
 
     public void FillLastBetsView()
     {
-        for (int i = 0; i < noOfBets; i++)
+        if (lastBetsList != null)
         {
-            GameObject go = Instantiate(betsViewElement, betsViewParent);
-            go.GetComponent<TextMeshProUGUI>().text = lastBetsList[i].ToString();
+            for (int i = 0; i < lastBetsList.Count; i++)
+            {
+                GameObject go = Instantiate(betsViewElement, betsViewParent);
+                go.GetComponent<TextMeshProUGUI>().text = lastBetsList[i].Gametype.ToString();
+            }
         }
     }
 }
