@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class BetSelection : MonoBehaviour
 {
-    private const float COLOR_DURATION = 2f;
     [Header("Highlight selected bet")]
     [SerializeField] private Clickable clickable;
     [SerializeField] private Color selectedColor;
@@ -205,22 +204,23 @@ public class BetSelection : MonoBehaviour
         clickable.betSelected += OnBetClicked;
         nmbTriggered += OnNMBTriggered;
         bettingRequests = new List<BettingRequest>();
+
         //Writing the names of all the objects in the list to a text file
         //for easy copy pasting of names
         //StartCoroutine(WriteToFile());
     }
 
-    //When a bet is clicked on the table with mouse/touch. Chips will be put on table when tapped.
-    private void OnBetClicked(Transform _selectedBetTransform)
+    //When a bet is clicked on the table with mouse/touch.
+    private void OnBetClicked(Transform selectedBetTransform)
     {
         if (currentChip.value <= player.playerBalance)
         {
-            InstantiateCoin(_selectedBetTransform);
-            StartCoroutine(BetClickedRoutine(_selectedBetTransform, selectedColor));
+            InstantiateCoin(selectedBetTransform);
+            StartCoroutine(BetClickedRoutine(selectedBetTransform, selectedColor));
         }
         else
         {
-            StartCoroutine(BetClickedRoutine(_selectedBetTransform, lowBalanceColor));
+            StartCoroutine(BetClickedRoutine(selectedBetTransform, lowBalanceColor));
         }
     }
 
@@ -234,31 +234,29 @@ public class BetSelection : MonoBehaviour
     }
 
     //Things which will happen after clicking a bet on the table.
-    IEnumerator BetClickedRoutine(Transform _selectedBetTransform, Color _highlightColor)
+    IEnumerator BetClickedRoutine(Transform selectedBetTransform, Color highlightColor)
     {
         RevertTableSpriteColor();
 
-        foreach (SpriteRenderer sr in spriteLists[nameToIndexMap[_selectedBetTransform.name]].sprites)
+        foreach (SpriteRenderer sr in spriteLists[nameToIndexMap[selectedBetTransform.name]].sprites)
         {
-            Highlight.HighlightSprite(sr, _highlightColor);
+            Highlight.HighlightSprite(sr, highlightColor);
         }
 
-        yield return new WaitForSeconds(COLOR_DURATION);
+        yield return new WaitForSeconds(2f);
 
         RevertTableSpriteColor();
     }
 
     //Puts coin on corresponding bet on the table.
-    private void InstantiateCoin(Transform _selectedBetTransform)
+    private void InstantiateCoin(Transform selectedBetTransform)
     {
-        GameObject _coin = Instantiate(coinPrefab, _selectedBetTransform.position, Quaternion.Euler(90, 0, 0), coinParent);
-        _coin.GetComponent<SpriteRenderer>().color = currentChip.coinColor;
-        _coin.GetComponent<CoinOnTable>().coinValueText.text = currentChip.valueString;
-
-        Debug.Log("Instantiated Coin!");
+        GameObject coin = Instantiate(coinPrefab, selectedBetTransform.position, Quaternion.Euler(90, 0, 0), coinParent);
+        coin.GetComponent<SpriteRenderer>().color = currentChip.coinColor;
+        coin.GetComponent<CoinOnTable>().coinValueText.text = currentChip.valueString;
 
         //Add this coin to the stack so we can undo it when needed
-        undo.UpdateCoinList(_coin);
+        undo.UpdateCoinList(coin);
 
         //Update player balance
         player.BetMoney(currentChip.value);
@@ -267,7 +265,7 @@ public class BetSelection : MonoBehaviour
         bet.UpdateBetAmount(currentChip.value);
 
         //Update Bet types list to be sent to server
-        bettingRequests.Add(new BettingRequest() { betName = _selectedBetTransform.name, amount = currentChip.value });
+        bettingRequests.Add(new BettingRequest() { betName = selectedBetTransform.name, amount = currentChip.value });
     }
 
     public void OnNMBTriggered()

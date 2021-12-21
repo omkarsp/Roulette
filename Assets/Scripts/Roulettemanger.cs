@@ -10,7 +10,6 @@ partial class RouletteInput
     public int position { set; get; }
     public int[] Probability { set; get; }
 }
-
 public partial class BettingRequest
 {
     public string betName { get; set; }
@@ -32,6 +31,20 @@ public partial class BettingType
 {
     public int Type { set; get; }
     public double Amount { set; get; }
+}
+
+public partial class CustomType
+{
+    public int Number { set; get; }
+    public double Amount { set; get; }
+}
+
+public class BettingDetails
+{
+    public string Member { set; get; }//player name
+    public double Amount { set; get; }//bet amount
+    public int Gameid { set; get; }//game id
+    public string Type { set; get; }//1 to 18 - bet type
 }
 
 public class Roulettemanger : MonoBehaviour
@@ -244,100 +257,3 @@ public class Roulettemanger : MonoBehaviour
         else { return 0; }
     }
 }
-
-[Serializable]
-public class GameTimerModel
-{
-    public int gameid { set; get; }
-    public double timer { set; get; }
-}
-
-[Serializable]
-//user related details
-//display game balance, member id, account balance
-public class RegisterUsers
-{
-    public string ConnectionId { get; set; }
-    public string Memberid { get; set; }
-    public string Authentication { get; set; }
-    public Int64 Mid { get; set; }
-    public double AccountBalance { get; set; }//account balance is main balance
-    public double GameBalance { get; set; }//profit/loss
-}
-
-[Serializable]
-public class GameWinner//to display winning numbers
-{
-    public int Gameid { set; get; }
-    public int Winnumber { set; get; }//depends on which method you are calling
-}
-
-[Serializable]
-
-//keep displaying the coming data
-public class BettingDetails
-{
-    public int Id { set; get; }
-    public int Gameid { set; get; }
-    public string Member { set; get; }
-    public double Amount { set; get; }
-    public string Type { set; get; }
-}
-
-[Serializable]
-public class RouletteBeddingRequest
-{
-    public string Memberid { get; set; }
-    public string Authentication { get; set; }
-    public Int64 Gameid { get; set; }
-    public int Gamewallet { set; get; }
-    public List<BeddingType> TypeBet { set; get; }
-    public List<CustomType> CustomBet { set; get; }
-}
-
-[Serializable]
-public partial class BeddingType
-{
-    public int Type { set; get; }
-    public double Amount { set; get; }
-}
-
-[Serializable]
-public partial class CustomType
-{
-    public int Number { set; get; }
-    public double Amount { set; get; }
-}
-
-[Serializable]
-public partial class PreviousWinnerList
-{
-    public int Gamemid { set; get; }
-    public string Gameid { set; get; }
-    public string Username { set; get; }
-    public int Gametype { set; get; }
-    public double Amount { set; get; }
-    public double Winamount { set; get; }
-    public string GametypeBet { set; get; }
-}
-
-[Serializable]
-//game id and time
-public partial class OnConnected
-{
-    public RegisterUsers Userdetails { set; get; }
-    public GameTimerModel GameTimer { set; get; }
-    public List<BettingDetails> CurrentBets { set; get; }
-    public List<PreviousWinnerList> PreviousWinnerList { set; get; }//dont implement for now
-    public List<GameWinner> LastWinningNumber { set; get; }
-
-    //member, gamebalance, winbalance, count, list, gameid, timer
-}
-
-[Serializable]
-public partial class OnReset
-{
-    public GameTimerModel GameTimer { set; get; }
-    public List<PreviousWinnerList> PreviousWinnerList { set; get; }
-}
-//keep default id 0. then user wont be able to bet if id is 0.

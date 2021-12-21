@@ -7,51 +7,31 @@ public class Countdown : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private TextMeshProUGUI secondsText;
-    [SerializeField] private BetSelection betSelection;
-    [SerializeField] private Clickable clickable;
-    [SerializeField] private BallMovement ballMovement;
-    [SerializeField] private CameraAnimation cameraAnimation;
-    [SerializeField] private SignalRConnection signalRConnection;
-    public int gameId = 0;
-    public int resultNum = 0;
-
-    public void setResultNum(int _resultNum)
+    [SerializeField] BetSelection betSelection;
+    [SerializeField] Clickable clickable;
+    public void StartCountdown(double seconds)
     {
-        resultNum = _resultNum;
+        StartCoroutine(UpdateTimer(seconds));
     }
 
-    public void StartCountdown(double _seconds, int _gameId)
+    IEnumerator UpdateTimer(double seconds)
     {
-        StartCoroutine(UpdateTimer(_seconds, _gameId));
-    }
+        bool isNmbTrigger = false;
 
-    IEnumerator UpdateTimer(double _seconds, int _gameId)
-    {
-        bool _isNmbTrigger = false;
-        bool _isResultTriggered = false;
+        WaitForSeconds updateFrequency = new WaitForSeconds(1f);
+        int totalTime = Convert.ToInt32(seconds);
 
-        WaitForSeconds _updateFrequency = new WaitForSeconds(1f);
-        int _totalTime = Convert.ToInt32(_seconds);
-
-        while (_totalTime >= 0)
+        while (totalTime >= 0)
         {
-            timerText.text = (_totalTime / 60).ToString("00") + ":" + (_totalTime % 60).ToString("00");
-            yield return _updateFrequency;
-            _totalTime--;
-            if (_totalTime <= 10 && !_isNmbTrigger)
+            timerText.text = (totalTime / 60).ToString("00") + ":" + (totalTime % 60).ToString("00");
+            yield return updateFrequency;
+            totalTime--;
+            if (totalTime <= 10 && !isNmbTrigger)
             {
                 betSelection.nmbTriggered();//stop betting when 10 seconds are remaining in countdown.
-                _isNmbTrigger = true;
+                isNmbTrigger = true;
                 clickable.isBettingActive = false;
             }
-            if (_totalTime <= 0 && !_isResultTriggered)
-            {
-                _isResultTriggered = true;
-                signalRConnection.GameResult(_gameId);
-            }
         }
-
-        ballMovement.StartBallSpinRoutine(resultNum);
-        cameraAnimation.MoveToWheel();
     }
 }

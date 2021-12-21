@@ -10,16 +10,9 @@ public class BallTarget: MonoBehaviour
 
     public Transform GenerateRandomResult()
     {
-        //call result method
         resultNum = UnityEngine.Random.Range(0, targetObjects.Count);
         Debug.Log(resultNum);
         return targetObjects[resultNum].transform;
-    }
-
-    public Transform GetResultTransform(int _resultNum)
-    {
-        Debug.Log(_resultNum);
-        return targetObjects[_resultNum].transform;
     }
 
     public Collider GetCollider()

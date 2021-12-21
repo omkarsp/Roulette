@@ -25,24 +25,20 @@ public class Undo : MonoBehaviour
         undoButton.onClick.AddListener(UndoLastBet);
     }
 
-    public void UpdateCoinList(GameObject _coinToPush)
+    public void UpdateCoinList(GameObject coinToPush)
     {
-        _coinToPush.GetComponent<CoinOnTable>().coinValue = currentChip.value;
-        coinValues.Push(_coinToPush.GetComponent<CoinOnTable>().coinValue);
-        coinsInGame.Push(_coinToPush);
+        coinToPush.GetComponent<CoinOnTable>().coinValue = currentChip.value;
+        coinValues.Push(coinToPush.GetComponent<CoinOnTable>().coinValue);
+        coinsInGame.Push(coinToPush);
     }
 
     public void UndoLastBet()
     {
         if (coinsInGame.Count > 0)
         {
-            Debug.Log("stack count 1: " + coinsInGame.Count);
             bet.UpdateBetAmount(-coinsInGame.Peek().GetComponent<CoinOnTable>().coinValue);
-            Debug.Log("stack count 2: " + coinsInGame.Count);
-            Destroy(coinsInGame.Pop());
-            Debug.Log("stack count 3: " + coinsInGame.Count);
-            //coinsInGame.Pop();
-            //Debug.Log("stack count 4: " + coinsInGame.Count);
+            Destroy(coinsInGame.Peek());
+            coinsInGame.Pop();
         }
         if (coinValues.Count > 0)
         {
@@ -59,12 +55,6 @@ public class Undo : MonoBehaviour
     public void ClearCoinsFromTable()
     {
         coinValues.Clear();
-
-        //for (int i = 0; i < coinsInGame.Count; i++)
-        //{
-        //    Destroy(coinsInGame.Pop());
-        //}
-
         foreach (GameObject coin in coinsInGame) Destroy(coin);
     }
 

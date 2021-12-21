@@ -22,32 +22,32 @@ public class Player : MonoBehaviour
         playerBalanceText.text = playerBalance.ToString();
     }
 
-    public void UpdateBalance(double _netProfit)
+    public void UpdateBalance(double netProfit)
     {
-        playerBalance += _netProfit;
+        playerBalance += netProfit;
         playerBalanceText.text = playerBalance.ToString();
     }
 
     //When coins are put on table
-    public void BetMoney(double _betAmount)
+    public void BetMoney(double betAmount)
     {
-        playerBalance -= _betAmount;
+        playerBalance -= betAmount;
         playerBalanceText.text = playerBalance.ToString();
     }
 
-    public void SetPlayerName(string _member)
+    public void SetPlayerName(string member)
     {
-        playerName.text = _member;
+        playerName.text = member;
     }
 
-    public void SetPlayerBalance(double _balance)
+    public void SetPlayerBalance(double balance)
     {
-        playerBalance = _balance;
-        playerBalanceText.text = _balance.ToString();
+        playerBalance = balance;
+        playerBalanceText.text = balance.ToString();
     }
 
-    public void SetPlayerProfit(double _profit)
+    public void SetPlayerProfit(double profit)
     {
-        playerProfitText.text = _profit.ToString();
+        playerProfitText.text = profit.ToString();
     }
 }
